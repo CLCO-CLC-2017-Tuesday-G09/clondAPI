@@ -98,7 +98,7 @@ public class Quickstart {
     }
 
     public static void main(String[] args) throws IOException {
-        // Build a new authorized API client service.
+  /*      // Build a new authorized API client service.
         Drive service = getDriveService();
 
         // Print the names and IDs for up to 10 files.
@@ -114,7 +114,27 @@ public class Quickstart {
             for (File file : files) {
                 System.out.printf("%s (%s)\n", file.getName(), file.getId());
             }
-        }
+        }*/
+        // Build a new authorized API client service.
+        Drive service = getDriveService();
+
+        // Print the names and IDs for up to 10 files.
+        FileList result = service.files().list()
+             .setPageSize(10)
+             .setFields("nextPageToken, files(id, name)")
+             .execute();
+
+        //*
+        File fileMetadata = new File();
+        fileMetadata.setName("My Report");
+        fileMetadata.setMimeType("application/zip");
+
+        java.io.File filePath = new java.io.File("D:\\Test.txt");
+        FileContent mediaContent = new FileContent("application/zip", filePath);
+        File file = service.files().create(fileMetadata, mediaContent)
+        .setFields("id")
+        .execute();
+        System.out.println("File ID: " + file.getId()); //*/
     }
 
 }
